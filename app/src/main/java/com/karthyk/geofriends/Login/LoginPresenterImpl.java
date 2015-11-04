@@ -3,7 +3,10 @@ package com.karthyk.geofriends.Login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
+
+import com.google.android.gms.plus.model.people.Person;
 
 import java.util.HashMap;
 
@@ -68,5 +71,15 @@ public class LoginPresenterImpl implements LoginPresenter, LoginFinishedListener
     @Override
     public void onFailure(String error) {
         mLoginView.NoNetwork(error);
+    }
+
+    @Override
+    public void PersonInfo(Person person) {
+        mLoginView.getPersonInfo(person);
+    }
+
+    @Override
+    public void DisplayPicture(Bitmap resultBitmap) {
+        mLoginView.setDisplayPicture(resultBitmap);
     }
 }

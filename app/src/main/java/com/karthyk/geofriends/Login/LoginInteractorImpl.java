@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -18,6 +21,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import java.io.InputStream;
 import java.util.HashMap;
 
 /**
@@ -52,7 +56,7 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
     Context mContext;
     Activity mActivity;
     String mUserName;
-
+    Bitmap resultBmp;
     final LoginFinishedListener mLoginFinishedListener;
 
     public LoginInteractorImpl(Activity activity, Context context,
@@ -77,6 +81,10 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
         if (currentPerson != null) {
             mUserName = currentPerson.getDisplayName(); //BY THIS CODE YOU CAN GET CURRENT LOGIN USER ID
             mLoginFinishedListener.onSuccess(mUserName);
+            mLoginFinishedListener.PersonInfo(currentPerson);
+            if(currentPerson.hasImage()) {
+                new GetProfileImage().execute(currentPerson.getImage().getUrl());
+            }
         } else {
             Log.e(TAG, "Current Person is null");
         }
@@ -207,6 +215,29 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
             } else {
                 Log.d(TAG, "GET_ACCOUNTS Permission Denied.");
             }
+        }
+    }
+
+    private class GetProfileImage extends AsyncTask<String, Void, Bitmap> {
+
+        protected Bitmap doInBackground(String... urls) {
+            String urlDisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+
+                InputStream in = new java.net.URL(urlDisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            resultBmp = result;
+            mLoginFinishedListener.DisplayPicture(resultBmp);
         }
     }
 }

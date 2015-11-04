@@ -9,4 +9,5 @@
     <string name="Connected">Signed in successfully</string>
     <string name="sign_in">Click Sign In</string>
     <string name="sign_out">Log out</string>
+    <string name="display_picture_content_description">display picture</string>
 </resources>
