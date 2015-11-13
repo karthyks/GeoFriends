@@ -1,12 +1,12 @@
 package com.karthyk.geofriends.Login;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -18,6 +18,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.karthyk.geofriends.Database.DataBaseHelper;
+import com.karthyk.geofriends.Database.DataProvider;
+import com.karthyk.geofriends.Database.Table;
 
 import java.util.HashMap;
 
@@ -50,8 +53,9 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
   Context mContext;
   Activity mActivity;
   String mUserName;
-  Bitmap resultBmp;
   final LoginFinishedListener mLoginFinishedListener;
+
+  DataBaseHelper mDBHelper;
 
   public LoginInteractorImpl(Activity activity, Context context,
                              final LoginFinishedListener loginFinishedListener) {
@@ -65,6 +69,7 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
         .addScope(new Scope(Scopes.PROFILE))
         .addScope(new Scope(Scopes.EMAIL))
         .build();
+    mDBHelper = new DataBaseHelper(mContext);
   }
 
   @Override
@@ -74,6 +79,7 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
 
     Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
     if (currentPerson != null) {
+      addUserToDatabase(currentPerson);
       mUserName = currentPerson.getDisplayName(); //BY THIS CODE YOU CAN GET CURRENT LOGIN USER ID
       mLoginFinishedListener.onSuccess(mUserName);
       mLoginFinishedListener.PersonInfo(currentPerson);
@@ -211,5 +217,28 @@ public class LoginInteractorImpl implements LoginInteractor, GoogleApiClient.Con
         Log.d(TAG, "GET_ACCOUNTS Permission Denied.");
       }
     }
+  }
+
+  public void addUserToDatabase(Person person) {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(Table.COLUMN_USERID, person.getId());
+    contentValues.put(Table.COLUMN_USER_NAME, person.getDisplayName());
+    contentValues.put(Table.COLUMN_FIRST_NAME, person.getDisplayName());
+    contentValues.put(Table.COLUMN_LAST_NAME, person.getDisplayName());
+    contentValues.put(Table.COLUMN_AGE, 10);
+    contentValues.put(Table.COLUMN_DOB, person.getBirthday());
+    /* Bitmap userDP = DownloadUtility.getBitmapFromURL(person.getImage().getUrl());
+    if(userDP != null) {
+      contentValues.put(Table.COLUMN_USER_DP, DbBitMapUtility.getBytes(userDP));
+    }
+    Bitmap userCover = DownloadUtility.getBitmapFromURL(person.getCover().getCoverPhoto().getUrl());
+    if(userCover != null) {
+      contentValues.put(Table.COLUMN_USER_COVER, DbBitMapUtility.getBytes(userCover));
+    } */
+    contentValues.put(Table.COLUMN_CURRENT_CITY, "CITY");
+    contentValues.put(Table.COLUMN_CURRENT_LATITUDE, 1.0000);
+    contentValues.put(Table.COLUMN_CURRENT_LONGITUDE, 1.0000);
+    contentValues.put(Table.COLUMN_CURRENT_COUNTRY, "Country");
+    mContext.getContentResolver().insert(DataProvider.mURI, contentValues);
   }
 }
