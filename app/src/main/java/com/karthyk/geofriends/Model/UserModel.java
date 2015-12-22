@@ -1,10 +1,12 @@
 package com.karthyk.geofriends.Model;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.karthyk.geofriends.Database.Table;
+import com.karthyk.geofriends.database.Table;
 
-public class UserModel {
+public class UserModel implements Parcelable {
   private String mUserID;
   private String mUserName;
   private String mFirstName;
@@ -32,6 +34,33 @@ public class UserModel {
     mUserDP = cursor.getBlob(cursor.getColumnIndex(Table.COLUMN_USER_DP));
     mUserCover = cursor.getBlob(cursor.getColumnIndex(Table.COLUMN_USER_COVER));
   }
+
+  protected UserModel(Parcel in) {
+    mUserID = in.readString();
+    mUserName = in.readString();
+    mFirstName = in.readString();
+    mLastName = in.readString();
+    mAge = in.readString();
+    mDOB = in.readString();
+    mCurrentCity = in.readString();
+    mCurrentLatitude = in.readDouble();
+    mCurrentLongitude = in.readDouble();
+    mCurrentCountry = in.readString();
+    mUserDP = in.createByteArray();
+    mUserCover = in.createByteArray();
+  }
+
+  public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
+    @Override
+    public UserModel createFromParcel(Parcel in) {
+      return new UserModel(in);
+    }
+
+    @Override
+    public UserModel[] newArray(int size) {
+      return new UserModel[size];
+    }
+  };
 
   public String getmUserID() {
     return mUserID;
@@ -127,5 +156,24 @@ public class UserModel {
 
   public void setmUserCover(byte[] mUserCover) {
     this.mUserCover = mUserCover;
+  }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(mUserID);
+    dest.writeString(mUserName);
+    dest.writeString(mFirstName);
+    dest.writeString(mLastName);
+    dest.writeString(mAge);
+    dest.writeString(mDOB);
+    dest.writeString(mCurrentCity);
+    dest.writeDouble(mCurrentLatitude);
+    dest.writeDouble(mCurrentLongitude);
+    dest.writeString(mCurrentCountry);
+    dest.writeByteArray(mUserDP);
+    dest.writeByteArray(mUserCover);
   }
 }

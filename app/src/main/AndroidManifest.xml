@@ -12,24 +12,26 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
+        android:name=".Activities.AppGlobal">
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".Activities.Login.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".Activities.Main.MainActivity" >
         </activity>
 
         <meta-data
@@ -40,10 +42,40 @@
             android:value="@string/google_maps_key" />
 
         <provider
-            android:name = ".Database.DataProvider"
-            android:authorities="com.karthyk.geofriends.Database.geoFriendsDB">
+            android:name=".database.DataProvider"
+            android:authorities="com.karthyk.geofriends.database.geoFriendsDB"
+            android:multiprocess="true"
+            android:exported="true">
         </provider>
 
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Activities.Maps.MapsActivity"
+            android:label="@string/title_activity_maps" >
+        </activity>
+
+        <service
+            android:name=".services.GooglePlusIntentService"
+            android:exported="false" >
+        </service>
+        <service android:name=".services.GoogleSignInIntentService"
+                 android:exported="false">
+        </service>
+        <service
+            android:name=".services.LocationUpdateService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
