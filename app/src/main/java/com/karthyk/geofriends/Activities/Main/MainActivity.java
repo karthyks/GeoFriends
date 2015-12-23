@@ -52,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_main_layout);
     mDrawerList = (ListView) findViewById(R.id.drawer_main_list);
 
-    ObjectDrawerItem[] objectDrawerItems = new ObjectDrawerItem[3];
+    ObjectDrawerItem[] objectDrawerItems = new ObjectDrawerItem[5];
     objectDrawerItems[0] = new ObjectDrawerItem(R.drawable.ic_home, mDrawerItems[0]);
     objectDrawerItems[1] = new ObjectDrawerItem(R.drawable.icon_profile, mDrawerItems[1]);
     objectDrawerItems[2] = new ObjectDrawerItem(R.drawable.ic_friends, mDrawerItems[2]);
+    objectDrawerItems[3] = new ObjectDrawerItem(R.drawable.ic_friends, mDrawerItems[3]);
+    objectDrawerItems[4] = new ObjectDrawerItem(R.drawable.ic_log_off, mDrawerItems[4]);
 
     DrawerItemCustomAdapter mDrawerItemCustomAdapter = new DrawerItemCustomAdapter(this, R.layout
         .drawer_main_list_row,

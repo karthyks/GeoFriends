@@ -1,26 +1,66 @@
 {
   "project_info": {
-    "project_id": "geofriends-4620b",
-    "project_number": "1008095027608",
+    "project_id": "geofriends-7b62a",
+    "project_number": "493986055362",
     "name": "GeoFriends"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1008095027608:android:fe67085883e5f0a7",
-        "client_id": "android:com.karthyk.geofriends.Activities.Login",
+        "mobilesdk_app_id": "1:493986055362:android:17b03f4fd4c77afe",
+        "client_id": "android:com.karthyk.geofriends.Login",
         "client_type": 1,
         "android_client_info": {
-          "package_name": "com.karthyk.geofriends.Activities.Login"
+          "package_name": "com.karthyk.geofriends.Login"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1008095027608-uvlpcuaujt29odmc7643jdujm6ojke30.apps.googleusercontent.com",
+          "client_id": "493986055362-tfhtdi3i1c61sf1d8pclhgqmsp56tsqe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.karthyk.geofriends.Activities.Login",
-            "certificate_hash": "897470897C7942E0395782284318B00DB7957A95"
+            "package_name": "com.karthyk.geofriends.Login",
+            "certificate_hash": "059B7D4DE2FB3528CEE0BB485837AEFC07D954E2"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493986055362:android:bc52ee7d73a57358",
+        "client_id": "android:com.karthyk.geofriends",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.karthyk.geofriends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493986055362-2qimckvj05vbmegmshfquntliefa8ukp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.karthyk.geofriends",
+            "certificate_hash": "059B7D4DE2FB3528CEE0BB485837AEFC07D954E2"
           }
         }
       ],

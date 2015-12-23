@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment implements ProfileView, View.OnCli
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                      Bundle savedInstanceState) {
 
-    View view = inflater.inflate(R.layout.profile_fragment, null);
+    View view = inflater.inflate(R.layout.fragment_profile, null);
     injectViews(view);
     mProfilePresenter = new ProfilePresenterImpl(this, getActivity(), getActivity(),
         getArguments());

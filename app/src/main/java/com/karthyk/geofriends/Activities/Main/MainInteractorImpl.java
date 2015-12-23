@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.karthyk.geofriends.Activities.Fragments.Profile.ProfileConstants;
 import com.karthyk.geofriends.Activities.Fragments.Profile.ProfileFragment;
+import com.karthyk.geofriends.Activities.Fragments.circles.CircleFragment;
 import com.karthyk.geofriends.Model.GoogleInfo;
 import com.karthyk.geofriends.Model.UserModel;
 import com.karthyk.geofriends.database.DataResolver;
@@ -42,6 +43,9 @@ public class MainInteractorImpl implements MainInteractor {
       case 2:
         break;
       case 3:
+        fragment = new CircleFragment();
+        break;
+      case 4:
         break;
     }
     return fragment;

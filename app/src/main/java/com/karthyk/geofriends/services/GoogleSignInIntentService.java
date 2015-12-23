@@ -26,6 +26,7 @@ public class GoogleSignInIntentService extends IntentService {
     mGoogleInfo = GoogleInfo.getInstance();
     OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi
         .silentSignIn(mGoogleInfo.getGoogleApiClient());
+    mGoogleInfo.getGoogleApiClient().connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
     if (opr.isDone()) {
       Log.d(TAG, "Got cached sign-in");
       GoogleSignInResult result = opr.get();
@@ -43,7 +44,6 @@ public class GoogleSignInIntentService extends IntentService {
   private void handleSignInResult(GoogleSignInResult result) {
     Log.d(TAG, "handleSignInResult:" + result.isSuccess());
     if (result.isSuccess()) {
-      mGoogleInfo.getGoogleApiClient().connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
       mGoogleInfo.setGoogleSignInAccount(result.getSignInAccount());
       broadcastResult(true);
     } else {

@@ -11,10 +11,14 @@
     <string name="sign_out">Log out</string>
     <string name="display_picture_content_description">display picture</string>
 
+    <string name="server_client_id">
+        493986055362-6nqt3427d63cm5apb1m9beue7q3qjja2.apps.googleusercontent.com</string>
+
     <string-array name="drawer_main_items_array">
         <item>Home</item>
         <item>Profile</item>
         <item>Groups</item>
+        <item>Circles</item>
         <item>Log out</item>
     </string-array>
 

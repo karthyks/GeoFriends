@@ -11,13 +11,20 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.android.gms.plus.model.people.PersonBuffer;
 import com.karthyk.geofriends.Activities.AppGlobal;
 import com.karthyk.geofriends.Model.GoogleInfo;
 import com.karthyk.geofriends.database.DataResolver;
 import com.karthyk.geofriends.services.GooglePlusIntentService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginInteractorImpl implements LoginInteractor,
     GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
@@ -109,8 +116,11 @@ public class LoginInteractorImpl implements LoginInteractor,
 
   @Override public void onConnected(Bundle bundle) {
     Log.d(TAG, "Api is connected");
-    mGoogleInfo.setPerson(Plus.PeopleApi.getCurrentPerson(mGoogleApiClient));
-    mPerson = mGoogleInfo.getPerson();
+    if(mGoogleApiClient.hasConnectedApi(Plus.API)) {
+      mGoogleInfo.setPerson(Plus.PeopleApi.getCurrentPerson(mGoogleApiClient));
+      mPerson = mGoogleInfo.getPerson();
+      mGoogleInfo.getCircles();
+    }
   }
 
   @Override public void onConnectionSuspended(int i) {

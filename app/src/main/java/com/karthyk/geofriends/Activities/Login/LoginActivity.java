@@ -56,6 +56,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     }
   }
 
+  private void showSignIn() {
+    signInButton.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.INVISIBLE);
+  }
+
   @Override
   public void NoNetwork(String error) {
     Toast.makeText(this, getString(R.string.NoNetworkError), Toast.LENGTH_SHORT).show();
@@ -70,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
   @Override
   public void OnDisconnected() {
     signInButton.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.INVISIBLE);
   }
 
   @Override
@@ -107,6 +113,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
 
   @Override protected void onResume() {
     super.onResume();
+    if(mLoginPresenter.isUserSignedIn())
+      GoogleInfo.getInstance().silentSignIn(this);
     LocalBroadcastManager.getInstance(this).registerReceiver(silentSignInReceiver, new
         IntentFilter(GoogleInfo.class.getSimpleName()));
   }
@@ -128,6 +136,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
       boolean result = intent.getBooleanExtra("Result", false);
       if (result) {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+      } else {
+        showSignIn();
       }
     }
   };
