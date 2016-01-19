@@ -6,6 +6,8 @@
     <ListView
         android:id="@+id/list_circles"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:divider="@color/wallet_dim_foreground_inverse_holo_dark"
+        android:dividerHeight="0dp">
     </ListView>
 </LinearLayout>
